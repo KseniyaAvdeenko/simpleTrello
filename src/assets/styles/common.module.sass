@@ -1,0 +1,111 @@
+@import "vars"
+
+
+h1
+  font-family: $titleFont
+  font-size: $h1Size
+  font-weight: 800
+
+h2
+  font-family: $titleFont
+  font-size: $h2Size
+  font-weight: 600
+
+h3
+  font-family: $titleFont
+  font-size: $h3Size
+  font-weight: 600
+
+
+.textAlign
+  text-align: center
+
+.buttonText
+  color: $textColor
+  font-size: $h5Size
+  font-weight: 500
+  padding: 15px 40px
+//--------display----------
+.blockIHidden
+  display: none !important
+//--------flex----------
+
+.dFlex
+  display: flex
+
+.flexColumn
+  flex-direction: column
+
+.jcCenter
+  justify-content: center
+
+.jcSpBtw
+  justify-content: space-between
+
+.jcSpBtw
+  justify-content: space-between
+
+.jcEnd
+  justify-content: end
+
+.aiCenter
+  align-items: center
+
+.aiEnd
+  align-items: end
+
+.centeredRow
+  @extend .dFlex
+  @extend .jcCenter
+  @extend .aiCenter
+
+
+.centeredColumn
+  @extend .dFlex
+  @extend .flexColumn
+  @extend .jcCenter
+  @extend .aiCenter
+//--------margins and paddings
+//--margins
+.mb_10
+  margin-bottom: 10px
+
+.mb_20
+  margin-bottom: 20px
+
+.mb_30
+  margin-bottom: 30px
+
+.mr_20
+  margin-right: 20px
+
+.ml_20
+  margin-left: 20px
+
+//--paddings
+
+.containerPaddings
+  padding-left: 14%
+  padding-right: 14%
+
+.p_20
+  padding: 20px
+
+.p_30
+  padding: 30px
+
+
+//----width & height
+.widthFull
+  width: 100%
+
+.heightFull
+  height: 100%
+
+
+//-----border-radius
+.rounded_20
+  border-radius: 20px
+
+.rounded_30
+  border-radius: 30px

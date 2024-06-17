@@ -1,0 +1,17 @@
+@import "vars"
+@import "common.module"
+
+.footer
+  @extend .centeredRow
+  @extend .containerPaddings
+  padding-top: 20px
+  padding-bottom: 20px
+  border-top: 1px solid $accentColor
+
+  &__link
+    @extend .centeredRow
+
+  &__text
+    color: $accentColor
+    font-size: inherit
+    @extend .ml_20

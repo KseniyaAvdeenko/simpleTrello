@@ -1,0 +1,115 @@
+@import "vars"
+@import "common.module"
+
+.auth
+  &__modal
+    position: absolute
+    top: 0
+    left: 0
+    @extend .centeredRow
+    @extend .widthFull
+    @extend .heightFull
+    @extend .containerPaddings
+
+  &__container
+    @extend .widthFull
+    height: 53%
+    @extend .rounded_20
+    @extend .dFlex
+
+
+.authModalLightMode
+  backdrop-filter: blur(3px)
+  background: #ffffff00
+
+.authModalDarkMode
+  backdrop-filter: blur(30px)
+  background: rgba(30, 30, 30, 0.05)
+
+.authContainerLightMode
+  box-shadow: 0 0 10px 0 $lightShadow
+  color: $bgColor
+  border: 1px solid transparent
+  background-color: $textColor
+
+.authContainerDarkMode
+  box-shadow: 0 0 10px 10px rgba(69, 69, 69, 0.25)
+  color: $textColor
+  border: 1px solid $primaryColor
+  background-color: $bgColor
+
+.authCardAndForm
+  background-color: transparent
+  @extend .centeredColumn
+  @extend .widthFull
+  @extend .heightFull
+  flex-basis: 50%
+  transition: display 2s ease-in-out
+
+.signInCard
+  @extend .authCardAndForm
+  border-left: 1px solid $accentColor
+
+.cards
+  &__heading
+    font-size: $h3Size
+    color: inherit
+    text-align: center
+    @extend .mb_20
+
+  &__button
+    @extend .buttonText
+    padding: 15px 40px
+    border: 1px solid transparent
+    background-color: $primaryColor
+    transition: all 0.5s ease-in
+    @extend .rounded_30
+
+    &:hover
+      outline: none
+      border: 1px solid $accentColor
+      background-color: $hoverColor
+
+  &__form
+    @extend .centeredColumn
+    width: 65%
+
+  &__inputContainer
+    @extend .dFlex
+    @extend .flexColumn
+    @extend .widthFull
+    margin-bottom: 10px
+
+  &__input
+    @extend .rounded_20
+    @extend .widthFull
+    padding: 15px
+    font-size: $pSize
+    border: 1px solid $accentColor
+    transition: all 0.5s ease-in
+
+    &::placeholder
+      color: rgba(143, 188, 143, 0.50)
+
+    &:focus,
+    &:active,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus
+      outline: none
+      border-color: $hoverColor
+
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill
+      background-color: transparent!important
+
+
+.signInForm
+  @extend .authCardAndForm
+
+.signUpCard
+  @extend .authCardAndForm
+  border-right: 1px solid $accentColor
+
+.signUpForm
+  @extend .authCardAndForm
