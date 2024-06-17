@@ -5,8 +5,6 @@ import {publicRoutes, privateRoutes} from "../router/routes";
 
 const AppRouter = () => {
     const auth = useAuth()
-    // console.log(auth)
-
     const loggedRoutes = () => {
         return (
             <Routes>

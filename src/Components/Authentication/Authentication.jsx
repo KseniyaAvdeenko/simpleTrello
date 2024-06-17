@@ -13,9 +13,10 @@ const Authentication = ({
                             onSingInChange,
                             onSingUpChange,
                             onSingUpSubmit,
-                            onSingInSubmit,
                             showAuthForm,
-                            signUpErrors
+                            signUpErrors,
+                            allUsers,
+                            signInUser,
                         }) => {
     return (
         <div
@@ -38,8 +39,10 @@ const Authentication = ({
                     authCardAndForms={authCardAndForms}/>
                 <SignInForm
                     onSingInChange={onSingInChange}
-                    onSingInSubmit={onSingInSubmit}
                     authCardAndForms={authCardAndForms}
+                    allUsers={allUsers}
+                    setAuthModal={setAuthModal}
+                    signInUser={signInUser}
                 />
             </div>
         </div>

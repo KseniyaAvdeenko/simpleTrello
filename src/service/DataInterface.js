@@ -8,8 +8,8 @@
 // }
 
 export class BoardDoc {
-    constructor(wsId, userId, name, background, url) {
-        this.wsId = wsId
+    constructor(boardId, userId, name, background, url) {
+        this.boardId = boardId
         this.userId = userId
         this.name = name
         this.background = background

@@ -1,6 +1,5 @@
 import {initializeApp} from "firebase/app";
 import {collection, getDocs, getFirestore, doc, updateDoc, arrayUnion, arrayRemove} from "firebase/firestore";
-import {fireBaseConverter, UserDoc} from "./DataInterface";
 
 
 export const firebaseConfig = {

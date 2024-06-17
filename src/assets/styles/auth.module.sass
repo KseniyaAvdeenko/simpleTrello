@@ -79,6 +79,7 @@
     @extend .flexColumn
     @extend .widthFull
     margin-bottom: 10px
+    @extend .positionRel
 
   &__input
     @extend .rounded_20
@@ -101,7 +102,7 @@
     &:-webkit-autofill:hover,
     &:-webkit-autofill:focus,
     &:-webkit-autofill
-      background-color: transparent!important
+      background-color: transparent !important
 
 
 .signInForm
@@ -113,3 +114,15 @@
 
 .signUpForm
   @extend .authCardAndForm
+
+.errors
+  color: darkred
+  @extend .mb_20
+
+.passwordWatcher
+  position: absolute
+  top: 30%
+  right: 15px
+
+.passwordWatcher > img
+  cursor: pointer

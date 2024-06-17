@@ -9,7 +9,7 @@ import Authentication from "./Components/Authentication/Authentication";
 import authStyles from './assets/styles/auth.module.sass'
 import {useEffect, useState} from "react";
 import {addItem, querySnapshot, db} from "./service/TrelloFirebaseConnection";
-import {fireBaseConverter, UserDoc} from "./service/DataInterface";
+
 
 
 function App() {
@@ -24,44 +24,40 @@ function App() {
     const [signUpUser, setSignUpUser] = useState({login: '', email: '', password: ''})
     const [signInUser, setSignInUser] = useState({email: '', password: ''})
     const [allUsers, setAllUsers] = useState([])
+
     const [signUpErrors, setSignUpErrors] = useState('')
     const onSingUpChange = (e) => {
         setSignUpUser({...signUpUser, [e.target.name]: e.target.value})
     }
-    let id = Date.parse(new Date())
 
-    useEffect( () => {
+    useEffect(() => {
         const {users} = querySnapshot.docs[3].data()
         setAllUsers(users)
-    }, [querySnapshot])
+    }, [])
 
-    console.log(allUsers)
     const onSingUpSubmit = (e) => {
         e.preventDefault()
-
-        //showAuthForm('signIn')
-        if(allUsers.length){
-            if(allUsers.filter(u=> u.email === signUpUser.email).length){
-                setSignUpErrors('User with')
-            }else{
-
+        let newUser = signUpUser
+        newUser['id'] = Date.parse(new Date())
+        if (allUsers.length) {
+            if (allUsers.filter(u => u.email === signUpUser.email).length) {
+                setSignUpErrors('User with this email is already existed')
+            } else {
+                addItem(db, 'trello', 'Users', 'users', newUser).then(res => console.log(res))
+                showAuthForm('signIn')
+                setSignUpErrors('')
+                 e.target.reset()
             }
-
-        }else{
-            let newUser = signUpUser
-            newUser['id'] = id
-            addItem(db, 'trello', 'Users', 'users', newUser).then(res=>console.log(res))
+        } else {
+            addItem(db, 'trello', 'Users', 'users', newUser).then(res => console.log(res))
+            showAuthForm('signIn')
+            setSignUpErrors('')
+            e.target.reset()
         }
-        console.log(signUpUser)
     }
 
     const onSingInChange = (e) => {
         setSignInUser({...signInUser, [e.target.name]: e.target.value})
-    }
-
-    const onSingInSubmit = (e) => {
-        e.preventDefault()
-
     }
 
     function showAuthForm(value) {
@@ -100,10 +96,11 @@ function App() {
                         setAuthModal={setAuthModal}
                         authModal={authModal}
                         authCardAndForms={authCardAndForms}
+                        allUsers={allUsers}
+                        signInUser={signInUser}
                         onSingUpChange={onSingUpChange}
                         onSingUpSubmit={onSingUpSubmit}
                         onSingInChange={onSingInChange}
-                        onSingInSubmit={onSingInSubmit}
                         showAuthForm={showAuthForm}
                         signUpErrors={signUpErrors}
                     />

@@ -1,0 +1,50 @@
+@import "vars"
+@import "common.module"
+
+.profile
+  @extend .dFlex
+  min-height: calc(-155px + 100vh)
+  @extend .containerPaddings
+  @extend .widthFull
+  padding-top: 40px
+  padding-bottom: 40px
+
+.profileContainer
+  @extend .widthFull
+  @extend .heightFull
+  @extend .dFlex
+  @extend .aiCenter
+  flex-wrap: wrap
+
+.boardBtn
+  @extend .centeredRow
+  @extend .rounded_20
+  width: 25%
+  font-size: $h5Size
+  height: 85px
+  margin: 0 12px 20px
+
+.newBoardButton
+  @extend .boardBtn
+  border: 1px solid $accentColor
+  background-color: transparent
+  color: $accentColor
+
+  transition: all 1s ease-in-out
+
+
+  & > span:first-of-type
+    font-size: $h3Size
+
+  &:hover
+    border: 1px solid $primaryColor
+    background: $primaryColor
+    color: $textColor
+
+
+.userBoardLink
+  @extend .boardBtn
+  text-decoration: none
+  color: #1E1E1E
+  border: 1px solid $bgColor
+
