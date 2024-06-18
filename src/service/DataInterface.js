@@ -1,26 +1,29 @@
-// export class UserDoc {
-//     constructor(id, login,email, password) {
-//         this.id = id
-//         this.login = login
-//         this.email = email
-//         this.password = password
-//     }
-// }
+export const nowDate = new Date();
+
+export class UserDoc {
+    constructor(id, login,email, password) {
+        this.id = id
+        this.login = login
+        this.email = email
+        this.password = password
+    }
+}
 
 export class BoardDoc {
-    constructor(boardId, userId, name, background, url) {
+    constructor(boardId, userId, name, background, textColor, url) {
         this.boardId = boardId
         this.userId = userId
         this.name = name
         this.background = background
+        this.textColor = textColor
         this.url = url
     }
 }
 
 export class TaskListDoc {
-    constructor(taskListId, workSpaceId, taskListName) {
+    constructor(taskListId, boardUrl, taskListName) {
         this.taskListId = taskListId
-        this.workSpaceId = workSpaceId
+        this.boardUrl = boardUrl
         this.taskListName = taskListName
     }
 }

@@ -9,6 +9,7 @@ import Authentication from "./Components/Authentication/Authentication";
 import authStyles from './assets/styles/auth.module.sass'
 import {useEffect, useState} from "react";
 import {addItem, querySnapshot, db} from "./service/TrelloFirebaseConnection";
+import {fireBaseConverter, nowDate, UserDoc} from "./service/DataInterface";
 
 
 
@@ -37,8 +38,7 @@ function App() {
 
     const onSingUpSubmit = (e) => {
         e.preventDefault()
-        let newUser = signUpUser
-        newUser['id'] = Date.parse(new Date())
+        let newUser = fireBaseConverter(new UserDoc(Date.parse(nowDate)), signUpUser.login, signUpUser.email, signUpUser.password)
         if (allUsers.length) {
             if (allUsers.filter(u => u.email === signUpUser.email).length) {
                 setSignUpErrors('User with this email is already existed')

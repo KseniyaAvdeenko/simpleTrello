@@ -19,17 +19,26 @@
 .boardBtn
   @extend .centeredRow
   @extend .rounded_20
-  width: 25%
+  width: 23%
   font-size: $h5Size
-  height: 85px
+  height: 100px
+  margin: 0 12px 20px
+
+.newBoardBtnContainer
+  @extend .positionRel
+  width: 23%
+  height: 100px
   margin: 0 12px 20px
 
 .newBoardButton
-  @extend .boardBtn
+  @extend .widthFull
+  @extend .heightFull
   border: 1px solid $accentColor
   background-color: transparent
   color: $accentColor
-
+  @extend .centeredRow
+  @extend .rounded_20
+  font-size: $h5Size
   transition: all 1s ease-in-out
 
 
@@ -46,5 +55,89 @@
   @extend .boardBtn
   text-decoration: none
   color: #1E1E1E
-  border: 1px solid $bgColor
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.30)
 
+.newBoardFormContainer
+  position: absolute
+  top: 50px
+  left: -30px
+  backdrop-filter: blur(10px)
+  @extend .p_20
+  @extend .rounded_20
+  width: 300px
+  height: fit-content
+  @extend .centeredColumn
+
+.newBoardForm
+  @extend .widthFull
+  @extend .heightFull
+  @extend .centeredColumn
+  @extend .rounded_20
+  @extend .p_20
+  border: 1px solid $accentColor
+
+  & .inputContainer
+    @extend .dFlex
+    @extend .jcSpBtw
+    @extend .aiCenter
+    @extend .widthFull
+    margin-bottom: 10px
+
+    & > input[type='text']
+      @extend .rounded_20
+      @extend .widthFull
+      padding: 10px
+      font-size: $pSize
+      border: 1px solid $accentColor
+      transition: all 0.5s ease-in
+
+    & > input[type='text']::placeholder
+      color: rgba(143, 188, 143, 0.50)
+
+    &> input[type='text']:focus,
+    &> input[type='text']:active
+      outline: none
+      border-color: $hoverColor
+
+
+    & > label
+      color: $accentColor
+      font-size: $pSize
+
+    & > input[type='color']
+      width: 30px
+      height: 30px
+      -webkit-appearance: none
+      -moz-appearance: none
+      appearance: none
+      border: none
+      cursor: pointer
+      border-radius: 50%
+      background-color: transparent
+
+
+    & > input[type="color"]::-webkit-color-swatch-wrapper,
+    & > input[type="color"]::-webkit-color-swatch
+      border-radius: 50%
+      padding: 0
+      width: 31px
+      height: 31px
+      border: none
+      box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.30)
+
+
+  &__button
+    font-weight: 500
+    margin-top: 10px
+    color: $textColor
+    font-size: $pSize
+    padding: 10px 30px
+    border: 1px solid transparent
+    background-color: $primaryColor
+    transition: all 0.5s ease-in
+    @extend .rounded_30
+
+  &__button:hover
+    outline: none
+    border: 1px solid $hoverColor
+    background-color: $hoverColor
