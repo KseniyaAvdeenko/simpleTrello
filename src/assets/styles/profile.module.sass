@@ -3,7 +3,8 @@
 
 .profile
   @extend .dFlex
-  min-height: calc(-155px + 100vh)
+  min-height: calc(-165px + 100vh)
+  max-height: calc(-165px + 100vh)
   @extend .containerPaddings
   @extend .widthFull
   padding-top: 40px
@@ -17,10 +18,10 @@
   flex-wrap: wrap
 
 .boardBtn
-  @extend .centeredRow
-  @extend .rounded_20
+  @extend .commonButton
+  padding: 15px 45px
   width: 23%
-  font-size: $h5Size
+  @extend .buttonText
   height: 100px
   margin: 0 12px 20px
 
@@ -33,22 +34,10 @@
 .newBoardButton
   @extend .widthFull
   @extend .heightFull
-  border: 1px solid $accentColor
-  background-color: transparent
-  color: $accentColor
-  @extend .centeredRow
-  @extend .rounded_20
-  font-size: $h5Size
-  transition: all 1s ease-in-out
-
+  @extend .transparentToGreenBtn
 
   & > span:first-of-type
-    font-size: $h3Size
-
-  &:hover
-    border: 1px solid $primaryColor
-    background: $primaryColor
-    color: $textColor
+    @extend .buttonText
 
 
 .userBoardLink
@@ -62,82 +51,57 @@
   top: 50px
   left: -30px
   backdrop-filter: blur(10px)
-  @extend .p_20
-  @extend .rounded_20
+  @extend .commonFormContainer
   width: 300px
   height: fit-content
-  @extend .centeredColumn
+
 
 .newBoardForm
   @extend .widthFull
   @extend .heightFull
-  @extend .centeredColumn
-  @extend .rounded_20
-  @extend .p_20
+  @extend .commonFormContainer
   border: 1px solid $accentColor
 
   & .inputContainer
-    @extend .dFlex
     @extend .jcSpBtw
-    @extend .aiCenter
-    @extend .widthFull
+    @extend .commonInputContainer
     margin-bottom: 10px
 
     & > input[type='text']
-      @extend .rounded_20
-      @extend .widthFull
-      padding: 10px
-      font-size: $pSize
-      border: 1px solid $accentColor
-      transition: all 0.5s ease-in
+      @extend .commonInputText
 
-    & > input[type='text']::placeholder
-      color: rgba(143, 188, 143, 0.50)
+  & .inputContainer__items
+    @extend .centeredColumn
+    @extend .widthFull
 
-    &> input[type='text']:focus,
-    &> input[type='text']:active
-      outline: none
-      border-color: $hoverColor
-
-
-    & > label
-      color: $accentColor
-      font-size: $pSize
-
-    & > input[type='color']
-      width: 30px
-      height: 30px
-      -webkit-appearance: none
-      -moz-appearance: none
-      appearance: none
-      border: none
-      cursor: pointer
-      border-radius: 50%
-      background-color: transparent
-
-
-    & > input[type="color"]::-webkit-color-swatch-wrapper,
-    & > input[type="color"]::-webkit-color-swatch
-      border-radius: 50%
-      padding: 0
-      width: 31px
-      height: 31px
-      border: none
-      box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.30)
+  & .inputContainer__colors
+    @extend .commonInputContainer
+    margin: 10px 0
+    flex-wrap: wrap
 
 
   &__button
     font-weight: 500
-    margin-top: 10px
+    @extend .mt_10
     color: $textColor
     font-size: $pSize
     padding: 10px 30px
     border: 1px solid transparent
     background-color: $primaryColor
-    transition: all 0.5s ease-in
+    @extend .transition
     @extend .rounded_30
 
-  &__button:hover
-    outline: none
-    border: 1px solid $hoverColor
-    background-color: $hoverColor
+    &__button:hover
+      @extend .commonButtonHover
+
+
+.colors__label
+  border-radius: 5px
+  width: 30px
+  height: 30px
+  margin: 5px
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15)
+
+  & > input[type='radio']
+    display: none
+

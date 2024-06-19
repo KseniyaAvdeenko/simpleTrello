@@ -29,10 +29,11 @@ export class TaskListDoc {
 }
 
 export class TaskDoc {
-    constructor(taskId, title, description, order) {
+    constructor(taskId, taskListId, boardUrl,  title, order) {
         this.taskId = taskId
+        this.taskListId = taskListId
+        this.boardUrl = boardUrl
         this.title = title
-        this.description = description
         this.order=order
     }
 }

@@ -27,13 +27,13 @@
   background: rgba(30, 30, 30, 0.05)
 
 .authContainerLightMode
-  box-shadow: 0 0 10px 0 $lightShadow
+  box-shadow: 0 0 10px 0 $darkShadow
   color: $bgColor
   border: 1px solid transparent
   background-color: $textColor
 
 .authContainerDarkMode
-  box-shadow: 0 0 10px 10px rgba(69, 69, 69, 0.25)
+  box-shadow: 0 0 10px 10px $lightShadow
   color: $textColor
   border: 1px solid $primaryColor
   background-color: $bgColor
@@ -59,16 +59,14 @@
 
   &__button
     @extend .buttonText
+    @extend .commonButton
     padding: 15px 40px
-    border: 1px solid transparent
+    border: 1px solid $primaryColor
     background-color: $primaryColor
-    transition: all 0.5s ease-in
     @extend .rounded_30
 
     &:hover
-      outline: none
-      border: 1px solid $hoverColor
-      background-color: $hoverColor
+      @extend .commonButtonHover
 
   &__form
     @extend .centeredColumn
@@ -82,22 +80,8 @@
     @extend .positionRel
 
   &__input
-    @extend .rounded_20
-    @extend .widthFull
+    @extend .commonInputText
     padding: 15px
-    font-size: $pSize
-    border: 1px solid $accentColor
-    transition: all 0.5s ease-in
-
-    &::placeholder
-      color: rgba(143, 188, 143, 0.50)
-
-    &:focus,
-    &:active,
-    &:-webkit-autofill:hover,
-    &:-webkit-autofill:focus
-      outline: none
-      border-color: $hoverColor
 
     &:-webkit-autofill:hover,
     &:-webkit-autofill:focus,

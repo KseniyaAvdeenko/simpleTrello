@@ -20,11 +20,7 @@ h3
 .textAlign
   text-align: center
 
-.buttonText
-  color: $textColor
-  font-size: $h5Size
-  font-weight: 500
-  padding: 15px 40px
+
 //--------display----------
 .blockIHidden
   display: none !important
@@ -82,6 +78,9 @@ h3
 .ml_20
   margin-left: 20px
 
+.mt_10
+  margin-top: 10px
+
 //--paddings
 
 .containerPaddings
@@ -114,3 +113,65 @@ h3
 //--------positioning
 .positionRel
   position: relative
+
+//-----transition-----
+.transition
+  transition: all 0.5s ease-in
+
+//----------inputs------
+.commonInputText
+  @extend .rounded_20
+  @extend .widthFull
+  padding: 10px
+  font-size: $pSize
+  border: 1px solid $accentColor
+  @extend .transition
+
+  &::placeholder
+    color: rgba(143, 188, 143, 0.50)
+
+  &:focus,
+  &:active
+    outline: none
+    border-color: $hoverColor
+//----------button-----
+.buttonText
+  font-size: $h5Size
+  font-weight: 500
+
+.commonButton
+  @extend .centeredRow
+  @extend .rounded_20
+  @extend .transition
+
+.commonButtonHover
+  outline: none
+  border: 1px solid $hoverColor
+  background-color: $hoverColor
+
+.transparentToGreenBtn
+  border: 1px solid $accentColor
+  background-color: transparent
+  @extend .commonButton
+  @extend .buttonText
+  color: $accentColor
+  padding: 15px 45px
+
+  &:hover
+    border: 1px solid $primaryColor
+    background: $primaryColor
+    color: $textColor
+    outline: none
+
+
+//-------inputContainer
+.commonInputContainer
+  @extend .dFlex
+  @extend .aiCenter
+  @extend .widthFull
+
+//-----formContainer
+.commonFormContainer
+  @extend .p_20
+  @extend .rounded_20
+  @extend .centeredColumn

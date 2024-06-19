@@ -51,7 +51,7 @@ const Profile = () => {
     const onChangeNewBoard = e => {
         setNewBoard({...newBoard, [e.target.name]: e.target.value})
     }
-
+    console.log(newBoard)
     const onSubmitNewBoard = e => {
         e.preventDefault()
         addItem(db,

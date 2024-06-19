@@ -1,8 +1,9 @@
 import React from 'react';
+import mainStyles from '../assets/styles/main.module.sass'
 
 const Main = () => {
     return (
-        <main style={{minHeight:'calc(100vh - 67px - 88px'}}>
+        <main className={mainStyles.main}>
             main page
         </main>
     );

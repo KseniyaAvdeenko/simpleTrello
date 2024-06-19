@@ -2,19 +2,16 @@
 @import "common.module"
 
 .header
-  @extend .widthFull
+  @extend .commonInputContainer
   @extend .containerPaddings
-  @extend .dFlex
-  @extend .aiCenter
   border-bottom: 1px solid $accentColor
   padding-top: 20px
   padding-bottom: 20px
 
   &__container
-    @extend .dFlex
+    @extend .commonInputContainer
     @extend .jcSpBtw
-    @extend .aiCenter
-    @extend .widthFull
+
 
 .auth
   &__buttons
@@ -23,35 +20,14 @@
     @extend .aiCenter
 
   &__button
-    @extend .centeredRow
+    @extend .transparentToGreenBtn
     @extend .rounded_30
-    padding: 15px 40px
-    color: $accentColor
-    border: 1px solid $accentColor
-    background-color: $textColor
-    transition: all 0.5s ease-in
-
-
-  &__button:hover
-    outline: none
-    border: 1px solid $primaryColor
-    background-color: $primaryColor
-    color: $textColor
 
   &__buttonLink
-    color: $accentColor
-    padding: 15px 40px
-    border: none
+    @extend.transparentToGreenBtn
+    border: 1px solid transparent
     outline: none
-    background-color: $textColor
     text-decoration: none
-    @extend .centeredRow
     @extend .rounded_30
     @extend .mr_20
-    transition: all 0.5s ease-in
 
-  &__buttonLink:hover
-    background-color: $primaryColor
-    color: $textColor
-    border: none
-    outline: none
