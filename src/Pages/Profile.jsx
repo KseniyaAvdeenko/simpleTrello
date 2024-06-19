@@ -10,7 +10,7 @@ const Profile = () => {
 
     const [currentUser, setCurrentUser] = useState({})
     const [userBoards, setUserBoards] = useState([])
-    const [newBoard, setNewBoard] = useState({name: '', textColor: "#1e1e1e", background: '#FFFFFF'})
+    const [newBoard, setNewBoard] = useState({name: '', textColor: "", background: ''})
     const [newBoardForm, setNewBoardForm] = useState([profileStyles.newBoardFormContainer, commonStyles.blockIHidden].join(' '))
 
     function getuserBoards(userId) {
@@ -51,7 +51,7 @@ const Profile = () => {
     const onChangeNewBoard = e => {
         setNewBoard({...newBoard, [e.target.name]: e.target.value})
     }
-    console.log(newBoard)
+
     const onSubmitNewBoard = e => {
         e.preventDefault()
         addItem(db,
@@ -78,6 +78,8 @@ const Profile = () => {
         setNewBoardForm([profileStyles.newBoardFormContainer, commonStyles.blockIHidden].join(' '))
     }
 
+    function saveBoardData(boardData){localStorage.setItem('currentBoard', JSON.stringify(boardData))}
+
     return (
         <div className={profileStyles.profile}>
             <div className={profileStyles.profileContainer}>
@@ -97,7 +99,9 @@ const Profile = () => {
                     ? userBoards.map(b => (
                         <Link key={b.boardId} to={"/board/" + b.url + '/'} className={profileStyles.userBoardLink}
                               onMouseOver={e => hoverIn(e)} onMouseOut={e => hoverOut(e)}
-                              style={{backgroundColor: b.background}}>{b.name}</Link>
+                              style={{backgroundColor: b.background}}
+                              onClick={()=>saveBoardData(b)}
+                        >{b.name}</Link>
                     ))
                     : ''
                 }

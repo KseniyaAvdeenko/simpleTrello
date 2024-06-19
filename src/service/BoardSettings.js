@@ -1,5 +1,4 @@
 export const textColors = [
-    {id: 'whiteColor', value: '#ffffff'},
     {id: 'blackColor', value: '#000000'},
     {id: 'darkGreenColor', value: '#1e1e1e'},
     {id: 'darkBlueColor', value: '#011125'},

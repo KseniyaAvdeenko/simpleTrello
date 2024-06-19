@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import boardStyles from "../../assets/styles/board.module.sass";
+import commonStyles from '../../assets/styles/common.module.sass'
 
 const NewTaskForm = ({dataList, taskFormClasses, setTaskName, taskName, onSubmitTaskForm, closeTaskForm}) => {
     const [closeBtnFill, setCloseBtnFill] =useState('#345e37')
@@ -11,7 +12,7 @@ const NewTaskForm = ({dataList, taskFormClasses, setTaskName, taskName, onSubmit
                     name="title"
                     id="tarkTitle"
                     required={true}
-                    className={boardStyles.inputText}
+                    className={commonStyles.commonInputText}
                     value={taskName}
                     onChange={e=>setTaskName(e.target.value)}
                 />

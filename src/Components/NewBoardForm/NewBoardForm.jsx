@@ -3,6 +3,10 @@ import profileStyles from "../../assets/styles/profile.module.sass";
 import {bgColors, textColors} from "../../service/BoardSettings";
 
 const NewBoardForm = ({newBoard, onChangeNewBoard, onSubmitNewBoard}) => {
+    const highlightSelected = (e)=>{
+        e.currentTarget.parentNode.childNodes.forEach(label => label.style.outline = '1px solid transparent')
+        e.currentTarget.style.outline = '2px solid #8FBC8F'
+    }
     return (
         <form onSubmit={e => onSubmitNewBoard(e)} className={profileStyles.newBoardForm}
               onClick={(e) => e.stopPropagation()}>
@@ -21,7 +25,9 @@ const NewBoardForm = ({newBoard, onChangeNewBoard, onSubmitNewBoard}) => {
                 <div className={profileStyles.inputContainer__colors}>
                     {textColors.map(color => (
                         <label className={profileStyles.colors__label} htmlFor={color.id} key={color.id}
-                               style={{backgroundColor: color.value}}>
+                               style={{backgroundColor: color.value}}
+                               onClick={e=> highlightSelected(e)}
+                        >
                             <input
                                 type="radio"
                                 name="textColor"
@@ -42,6 +48,7 @@ const NewBoardForm = ({newBoard, onChangeNewBoard, onSubmitNewBoard}) => {
                                 className={profileStyles.colors__label}
                                 htmlFor={bg.id}
                                 key={bg.id}
+                                onClick={e=> highlightSelected(e)}
                                 style={{backgroundColor: bg.value}}>
                                 <input
                                     type="radio"

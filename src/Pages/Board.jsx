@@ -2,26 +2,31 @@ import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import boardStyles from '../assets/styles/board.module.sass'
 import commonStyle from '../assets/styles/common.module.sass'
-import {addItem, db, querySnapshot} from "../service/TrelloFirebaseConnection";
+import {addItem, db, deleteItem, querySnapshot} from "../service/TrelloFirebaseConnection";
 import NewTaskListForm from "../Components/NewTaskListForm/NewTaskListForm";
-import {BoardDoc, fireBaseConverter, nowDate, TaskDoc, TaskListDoc} from "../service/DataInterface";
+import {fireBaseConverter, nowDate, TaskDoc, TaskListDoc} from "../service/DataInterface";
 import NewTaskForm from "../Components/NewTaskForm/NewTaskForm";
+import TaskList from "../Components/TaskList";
 
 const Board = () => {
     let link = useParams()
-    const [currentBoard, setCurrentBoard] = useState({})
+    const [currentBoard, setCurrentBoard] = useState(localStorage.currentBoard ? JSON.parse(localStorage.currentBoard) : {})
     const [boardTaskLists, setBoardTaskLists] = useState([])
-    const [boardSectionStyles, setBoardSectionStyles] = useState({color: '#1e1e1e', background: '#FFFFFF'})
+    const [boardSectionStyles, setBoardSectionStyles] = useState(localStorage.currentBoard ? {
+        color: JSON.parse(localStorage.currentBoard).textColor,
+        background: JSON.parse(localStorage.currentBoard).background
+    } : {color: '#1e1e1e', background: '#FFFFFF'})
     const [taskListForm, setTaskListForm] = useState([boardStyles.taskListForm, commonStyle.blockIHidden].join(' '))
     const [taskListName, setTaskListName] = useState('')
     const [taskName, setTaskName] = useState('')
     const [tasks, setTasks] = useState([])
     const [taskFormClasses, setTaskFormClasses] = useState({
-        taskForm: [boardStyles.task__item, commonStyle.blockIHidden].join(' '),
-        addButton: [boardStyles.taskList__button].join(' ')
+        taskForm: [boardStyles.task__form, commonStyle.blockIHidden].join(' '),
+        addButton: [boardStyles.taskList__button].join(' '),
+        settings: [boardStyles.taskList__settings].join(' '),
     })
+
     useEffect(() => {
-        console.log(querySnapshot.docs[1].data())
         if (querySnapshot.docs[0].data()) {
             const {boards} = querySnapshot.docs[0].data()
             if (boards && boards.filter(b => b.url === link.url).length) {
@@ -29,7 +34,7 @@ const Board = () => {
                 setBoardSectionStyles({
                     ...boardSectionStyles,
                     background: boards.filter(b => b.url === link.url)[0].background,
-                    color: boards.filter(b => b.url === link.url)[0].color
+                    color: boards.filter(b => b.url === link.url)[0].textColor
                 })
             }
         }
@@ -41,7 +46,6 @@ const Board = () => {
         }
         if (querySnapshot.docs[2].data()) {
             const {tasks} = querySnapshot.docs[2].data()
-            // console.log(tasks)
             if (tasks && tasks.filter(t => t.boardUrl === link.url).length) {
                 setTasks(tasks.filter(t => t.boardUrl === link.url))
             }
@@ -74,6 +78,29 @@ const Board = () => {
         setTaskListName('')
     }
 
+    const copyTaskList = (copiedName) => {
+        addItem(db,
+            'trello',
+            'TaskList',
+            'taskLists',
+            fireBaseConverter(new TaskListDoc(
+                'taskList' + Date.parse(nowDate),
+                currentBoard.url,
+                copiedName
+            ))
+        ).then(res => console.log(res))
+        setBoardTaskLists([...boardTaskLists, fireBaseConverter(new TaskListDoc(
+            'taskList' + Date.parse(nowDate),
+            currentBoard.url,
+            copiedName
+        ))])
+    }
+
+    function deleteTaskList(obj) {
+        deleteItem(db, 'trello', 'TaskList', 'taskLists', obj).then(res => console.log(res))
+        setBoardTaskLists(boardTaskLists.filter(tl => tl.taskListId !== obj.taskListId))
+    }
+
     function sortTasks(a, b) {
         if (a.order > b.order) {
             return 1;
@@ -85,73 +112,116 @@ const Board = () => {
     function openTaskForm() {
         setTaskFormClasses({
             ...taskFormClasses,
-            taskForm: [boardStyles.task__item].join(' '),
-            addButton: [boardStyles.taskList__button, commonStyle.blockIHidden].join(' ')
+            taskForm: [boardStyles.task__form].join(' '),
+            addButton: [boardStyles.taskList__button, commonStyle.blockIHidden].join(' '),
+            settings: [boardStyles.taskList__settings, commonStyle.blockIHidden].join(' '),
         })
     }
 
     function closeTaskForm() {
         setTaskFormClasses({
             ...taskFormClasses,
-            taskForm: [boardStyles.task__item, commonStyle.blockIHidden].join(' '),
-            addButton: [boardStyles.taskList__button].join(' ')
+            taskForm: [boardStyles.task__form, commonStyle.blockIHidden].join(' '),
+            addButton: [boardStyles.taskList__button].join(' '),
+            settings: [boardStyles.taskList__settings].join(' '),
         })
     }
 
     const onSubmitTaskForm = e => {
         e.preventDefault()
-        console.log(e.currentTarget.parentNode.previousSibling.children.length)
+        if (e.currentTarget.parentNode.previousSibling.childNodes.length) {
+            addItem(db,
+                'trello',
+                'Tasks',
+                'tasks',
+                fireBaseConverter(new TaskDoc(
+                    'taskId' + Date.parse(nowDate),
+                    e.currentTarget.dataset.list,
+                    currentBoard.url,
+                    taskName,
+                    parseInt(e.currentTarget.parentNode.previousSibling.childNodes[e.currentTarget.parentNode.previousSibling.children.length - 1].dataset.order) + 1
+                ))
+            ).then(res => console.log(res))
+            setTasks([...tasks, fireBaseConverter(new TaskDoc(
+                'taskId' + Date.parse(nowDate),
+                e.currentTarget.dataset.list,
+                currentBoard.url,
+                taskName,
+                parseInt(e.currentTarget.parentNode.previousSibling.childNodes[e.currentTarget.parentNode.previousSibling.children.length - 1].dataset.order) + 1
+            ))])
+        } else {
+            addItem(db,
+                'trello',
+                'Tasks',
+                'tasks',
+                fireBaseConverter(new TaskDoc(
+                    'taskId' + Date.parse(nowDate),
+                    e.currentTarget.dataset.list,
+                    currentBoard.url,
+                    taskName,
+                    e.currentTarget.parentNode.previousSibling.childNodes.length+1
+                ))
+            ).then(res => console.log(res))
+            setTasks([...tasks, fireBaseConverter(new TaskDoc(
+                'taskId' + Date.parse(nowDate),
+                e.currentTarget.dataset.list,
+                currentBoard.url,
+                taskName,
+                e.currentTarget.parentNode.previousSibling.childNodes.length+1
+            ))])
+        }
+        closeTaskForm()
+        setTaskName('')
+    }
 
+    function copyTask(e, obj) {
+        console.log()
         addItem(db,
             'trello',
             'Tasks',
             'tasks',
             fireBaseConverter(new TaskDoc(
                 'taskId' + Date.parse(nowDate),
-                e.currentTarget.dataset.list,
+                obj.taskListId,
                 currentBoard.url,
-                taskName,
-                e.currentTarget.parentNode.previousSibling.children.length
+                obj.title,
+                parseInt(e.currentTarget.parentNode.parentNode.parentNode.children[e.currentTarget.parentNode.parentNode.parentNode.children.length - 1].dataset.order) + 1
             ))
-        ).then(res => console.log(res))
+        ).then(res => res)
         setTasks([...tasks, fireBaseConverter(new TaskDoc(
             'taskId' + Date.parse(nowDate),
-            e.currentTarget.dataset.list,
+            obj.taskListId,
             currentBoard.url,
-            taskName,
-            e.currentTarget.parentNode.previousSibling.children.length
+            obj.title,
+            parseInt(e.currentTarget.parentNode.parentNode.parentNode.children[e.currentTarget.parentNode.parentNode.parentNode.children.length - 1].dataset.order) + 1
         ))])
-        closeTaskForm()
-        setTaskName('')
     }
 
-    // console.log(tasks)
+    function updateTasks(taskListId) {
+
+    }
+
+    function deleteTask(taskListId, obj) {
+        deleteItem(db, 'trello', 'Tasks', 'tasks', obj).then(r => r)
+        setTasks(tasks.filter(t => t.taskId !== obj.taskId))
+        let savedTasks = [...tasks.filter(t => t.taskListId === taskListId && t.taskId !== obj.taskId)]
+        tasks.filter(task => task.taskListId === taskListId).forEach(task => deleteItem(db, 'trello', 'Tasks', 'tasks', task))
+        savedTasks = savedTasks.sort(sortTasks).map((task, i) => {task.order = i + 1;return task})
+        savedTasks.forEach(task => addItem(db, 'trello', 'Tasks', 'tasks', task))
+    }
+
 
     return (
         <section className={boardStyles.boardSection} style={boardSectionStyles}>
             <div className={boardStyles.taskList__items}>
                 {boardTaskLists.length
                     ? boardTaskLists.map(btl => (
-                        <div className={boardStyles.taskList__item} key={btl.taskListId}>
-                            <div className={boardStyles.taskList__heading}>{btl.taskListName}</div>
-                            <div className={boardStyles.task__items}>
-                                {
-                                    tasks.length && tasks.filter(t => t.taskListId === btl.taskListId).length
-                                        ? tasks.filter(t => t.taskListId === btl.taskListId).sort(sortTasks).map(task => (
-                                            <div className={boardStyles.task__item} key={task.taskId}>{task.title}</div>
-                                        ))
-                                        : ''
-                                }
-                            </div>
-                            <div className={boardStyles.btnContainer}>
-                                <NewTaskForm onSubmitTaskForm={onSubmitTaskForm} taskName={taskName}
-                                             setTaskName={setTaskName} taskFormClasses={taskFormClasses}
-                                             dataList={btl.taskListId} closeTaskForm={closeTaskForm}/>
-                                <button className={taskFormClasses.addButton} onClick={() => openTaskForm()}>
-                                    + add task
-                                </button>
-                            </div>
-                        </div>
+                        <TaskList btl={btl} tasks={tasks} sortTasks={sortTasks} copyTask={copyTask}
+                                  onSubmitTaskForm={onSubmitTaskForm} taskName={taskName} deleteTask={deleteTask}
+                                  setTaskName={setTaskName} taskFormClasses={taskFormClasses}
+                                  closeTaskForm={closeTaskForm} openTaskForm={openTaskForm}
+                                  boardSectionStyles={boardSectionStyles} key={btl.taskListId}
+                                  copyTaskList={copyTaskList} deleteTaskList={deleteTaskList}/>
                     ))
                     : ''
                 }

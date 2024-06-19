@@ -1,4 +1,4 @@
-export const nowDate = new Date();
+export const nowDate = new Date().toISOString();
 
 export class UserDoc {
     constructor(id, login,email, password) {

@@ -32,6 +32,14 @@
     @extend .dFlex
     width: fit-content
 
+  &__settings
+    @extend .dFlex
+    @extend .aiCenter
+
+
+  &__icon
+    cursor: pointer
+
   &__btn
     @extend .commonButton
     border: none
@@ -95,7 +103,8 @@
 .task
   &__items
     @extend .widthFull
-  &__item
+
+  &__form
     padding: 10px
     @extend .widthFull
     border-radius: 10px
@@ -103,5 +112,15 @@
     box-shadow: 0 0 10px 0 $lightShadow
     @extend .mt_10
 
+  &__item
+    padding: 10px
+    @extend .widthFull
+    border-radius: 10px
+    height: fit-content
+    box-shadow: 0 0 10px 0 $lightShadow
+    @extend .mt_10
+    @extend .dFlex
+    @extend .jcSpBtw
+    @extend .aiCenter
 
 
