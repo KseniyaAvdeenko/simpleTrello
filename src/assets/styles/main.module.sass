@@ -9,9 +9,11 @@
   @extend .widthFull
   padding-top: 70px
   padding-bottom: 70px
+
   &__heading
     color: $bgColor
     text-transform: uppercase
+    margin: 0
 
   &__subheading
     color: $accentColor
@@ -23,9 +25,183 @@
     height: 530px
     margin-bottom: 45px
 
-  & > img
+  &__img
     @extend .widthFull
     @extend .heightFull
     object-fit: contain
+    object-position: center
 
 
+@media all and (max-device-width: 1920px)
+  .main
+    min-height: calc(-165px + 100vh)
+    max-height: calc(-165px + 100vh)
+    padding-top: 40px
+    padding-bottom: 40px
+
+    &__imageWrapper
+      height: 650px
+      margin-bottom: 35px
+
+@media all and (max-device-width: 1540px) and (max-device-height: 730px)
+  .main
+    min-height: calc(-138px + 100vh)
+    max-height: calc(-138px + 100vh)
+    padding-top: 40px
+    padding-bottom: 40px
+
+    &__imageWrapper
+      height: 350px
+      margin-bottom: 35px
+
+
+@media all and (max-device-width: 1370px) and (max-device-height: 770px)
+  .main
+    min-height: calc(-165px + 100vh)
+    max-height: calc(-165px + 100vh)
+    padding-top: 40px
+    padding-bottom: 40px
+
+    &__heading
+      font-size: $h2Size
+
+    &__imageWrapper
+      height: 350px
+      margin-bottom: 25px
+
+@media all and (max-device-width: 1280px) and (max-device-height: 880px)
+  .main
+    min-height: calc(-165px + 100vh)
+    max-height: calc(-165px + 100vh)
+    padding-top: 40px
+    padding-bottom: 40px
+
+    &__imageWrapper
+      height: 400px
+      margin-bottom: 35px
+
+
+@media all and (max-device-width: 1024px) and (max-device-height: 770px)
+  .main
+    min-height: calc(-138px + 100vh)
+    max-height: calc(-138px + 100vh)
+    padding-top: 40px
+    padding-bottom: 40px
+
+    &__heading
+      font-size: $h2Size
+
+    &__imageWrapper
+      height: 350px
+      margin-bottom: 10px
+
+@media all and (max-device-width: 1024px) and (max-device-height: 600px)
+  .main
+    min-height: calc(-138px + 100vh)
+    max-height: calc(-138px + 100vh)
+    padding-top: 40px
+    padding-bottom: 40px
+
+    &__heading
+      font-size: $h2Size
+
+    &__imageWrapper
+      height: 350px
+      margin-bottom: 10px
+
+@media all and (max-device-width: 1024px) and (orientation: portrait)
+  .main
+    min-height: calc(-165px + 100vh)
+    max-height: calc(-165px + 100vh)
+    padding-top: 40px
+    padding-bottom: 40px
+
+    &__imageWrapper
+      height: 430px
+      margin-bottom: 35px
+
+@media all and (max-device-width: 768px) and (orientation: portrait)
+  .main
+    min-height: calc(-165px + 100vh)
+    max-height: calc(-165px + 100vh)
+    padding-top: 40px
+    padding-bottom: 40px
+
+    &__heading
+      font-size: $h4Size
+
+    &__subheading
+      font-size: $h5Size
+
+@media all and (max-device-width: 540px) and (max-device-height: 720px)
+  .main
+    min-height: calc(-127px + 100vh)
+    max-height: calc(-127px + 100vh)
+    padding-top: 40px
+    padding-bottom: 40px
+
+    &__heading
+      font-size: $h4Size
+
+    &__subheading
+      font-size: $h5Size
+
+
+    &__imageWrapper
+      height: 350px
+      margin-bottom: 10px
+
+@media all and (max-device-width: 430px)
+  .main
+    min-height: calc(-163px + 100vh)
+    max-height: calc(-163px + 100vh)
+    padding: 40px 30px
+
+
+    &__heading
+      font-size: $h4Size
+
+    &__subheading
+      font-size: $h5Size
+
+
+    &__imageWrapper
+      height: 200px
+      margin-bottom: 10px
+
+
+@media all and (max-device-width: 412px)
+  .main
+    min-height: calc(-163px + 100vh)
+    max-height: calc(-163px + 100vh)
+    padding: 40px 30px
+
+
+    &__heading
+      font-size: $h4Size
+
+    &__subheading
+      font-size: $h5Size
+
+
+    &__imageWrapper
+      height: 200px
+      margin-bottom: 10px
+
+@media all and (max-device-width: 375px)
+  .main
+    min-height: calc(-163px + 100vh)
+    max-height: calc(-163px + 100vh)
+    padding: 40px 30px
+
+
+    &__heading
+      font-size: $h5Size
+
+    &__subheading
+      font-size: $pSize
+
+
+    &__imageWrapper
+      height: 200px
+      margin-bottom: 10px

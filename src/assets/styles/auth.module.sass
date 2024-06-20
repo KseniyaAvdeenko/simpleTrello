@@ -111,3 +111,113 @@
 
 .passwordWatcher > img
   cursor: pointer
+
+
+@media all and (max-device-width: 1920px)
+  .auth
+    &__container
+      height: 65%
+
+@media all and (max-device-width: 1540px) and (max-device-height: 730px)
+  .auth
+    &__container
+      height: 75%
+  .cards
+    &__heading
+      font-size: $h4Size
+
+@media all and (max-device-width: 1370px) and (max-device-height: 770px)
+  .cards
+    &__form
+      width: 90%
+
+@media all and (max-device-width: 1280px) and (max-device-height: 880px)
+  .cards
+    &__form
+      width: 90%
+
+
+@media all and (max-device-width: 1024px) and (orientation: portrait)
+  .cards
+    &__form
+      width: 90%
+  .auth
+    &__container
+      height: 45%
+
+@media all and (max-device-width: 768px) and (orientation: portrait)
+  .cards
+    &__heading
+      font-size: $h5Size
+
+@media all and (max-device-width: 540px) and (max-device-height: 720px)
+  .auth
+    &__modal
+      padding-right: 30px
+      padding-left: 30px
+
+    &__container
+      height: 85%
+      flex-direction: column
+
+  .signInCard
+    border-left: none
+    border-top: 1px solid $accentColor
+
+  .signInCard,
+  .signUpCard,
+  .signInForm,
+  .signUpForm
+    padding: 20px
+
+  .signUpCard
+    border-bottom: 1px solid $accentColor
+    border-right: none
+
+@media all and (max-device-width: 430px)
+  .auth
+    &__modal
+      padding-right: 30px
+      padding-left: 30px
+
+    &__container
+      height: 60%
+      flex-direction: column
+
+  .cards
+    &__button
+      padding: 10px 30px
+
+  .signInCard
+    border-left: none
+    border-top: 1px solid $accentColor
+
+  .signInCard,
+  .signUpCard,
+  .signInForm,
+  .signUpForm
+    padding: 20px
+
+  .signUpCard
+    border-bottom: 1px solid $accentColor
+    border-right: none
+
+
+@media all and (max-device-width: 390px)
+  .auth
+    &__container
+      height: 65%
+
+@media all and (max-device-width: 375px)
+  .auth
+    &__container
+      height: 85%
+
+  .cards
+    &__input
+      padding: 10px
+
+    &__button
+      margin-top: 10px
+    &__heading
+      font-size: 16px

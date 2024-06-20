@@ -56,7 +56,7 @@ const SignUpForm = ({authCardAndForms, onSingUpChange, onSingUpSubmit, signUpErr
                         <img onClick={() => togglePasswordVisibility()} src={passwordVisibility.image} alt="eye"/>
                     </div>
                 </div>
-                <button className={authStyle.cards__button} style={{marginTop: '20px'}}>Sign up</button>
+                <button className={authStyle.cards__button}>Sign up</button>
             </form>
         </div>
     );

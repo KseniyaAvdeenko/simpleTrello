@@ -125,3 +125,47 @@
     cursor: grab
 
 
+@media all and (max-device-width: 1540px) and (max-device-height: 730px)
+  .boardSection
+    min-height: calc(100vh - (63px + 102px))
+    max-height: calc(100vh - (63px + 102px))
+
+@media all and (max-device-width: 1536px) and (max-device-height: 730px)
+    .boardSection
+      min-height: calc(100vh - (63px + 66px))
+      max-height: calc(100vh - (63px + 66px))
+
+@media all and (max-device-width: 1024px) and (max-device-height: 770px)
+      .boardSection
+        min-height: calc(100vh - (63px + 85px))
+        max-height: calc(100vh - (63px + 85px))
+
+
+@media all and (max-device-width: 1024px) and (max-device-height: 600px)
+  .boardSection
+    min-height: calc(100vh - (63px + 66px))
+    max-height: calc(100vh - (63px + 66px))
+
+  .taskList
+    &__item,
+    &__btn
+      width: 300px
+
+
+@media all and (max-device-width: 1024px) and (orientation: portrait)
+  .taskList
+    &__item,
+    &__btn
+      width: 300px
+
+
+@media all and (max-device-width: 430px)
+  .taskList
+    &__item,
+    &__btn
+      width: 280px
+
+  .boardSection
+    min-height: calc(100vh - (63px + 82px))
+    max-height: calc(100vh - (63px + 82px))
+
