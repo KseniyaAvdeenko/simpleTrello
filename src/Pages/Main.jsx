@@ -3,6 +3,7 @@ import mainStyles from '../assets/styles/main.module.sass'
 import MainImg from '../assets/images/mainImg.png'
 
 const Main = () => {
+    console.log(document.body.clientHeight, document.body.clientWidth)
     return (
         <main className={mainStyles.main}>
             <div className={mainStyles.main__imageWrapper}>
