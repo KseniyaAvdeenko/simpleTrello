@@ -20,37 +20,52 @@ const Board = () => {
     const [taskListName, setTaskListName] = useState('')
     const [taskName, setTaskName] = useState('')
     const [tasks, setTasks] = useState([])
-    const [taskFormClasses, setTaskFormClasses] = useState({
-        taskForm: [boardStyles.task__form, commonStyle.blockIHidden].join(' '),
-        addButton: [boardStyles.taskList__button].join(' '),
-        settings: [boardStyles.taskList__settings].join(' '),
-    })
+
+    const [currentTaskList, setCurrentTaskList] = useState(null);
+    const [currentTask, setCurrentTask] = useState(null);
+
+    class GetDataFromFireBase {
+
+        getBoards(link) {
+            if (querySnapshot.docs[0].data()) {
+                const {boards} = querySnapshot.docs[0].data()
+                if (boards && boards.filter(b => b.url === link).length) {
+                    setCurrentBoard(boards.filter(b => b.url === link)[0])
+                    setBoardSectionStyles({
+                        ...boardSectionStyles,
+                        background: boards.filter(b => b.url === link)[0].background,
+                        color: boards.filter(b => b.url === link)[0].textColor
+                    })
+                }
+            }
+        }
+
+        getTaskLists(link) {
+            if (querySnapshot.docs[1].data()) {
+                const {taskLists} = querySnapshot.docs[1].data();
+                if (taskLists && taskLists.length && taskLists.filter(tl => tl.boardUrl === link).length) {
+                    setBoardTaskLists(taskLists.filter(tl => tl.boardUrl === link))
+                }
+            }
+        }
+
+        getTasks(link) {
+            if (querySnapshot.docs[2].data()) {
+                const {tasks} = querySnapshot.docs[2].data()
+                if (tasks && tasks.filter(t => t.boardUrl === link).length) {
+                    setTasks(tasks.filter(t => t.boardUrl === link))
+                }
+            }
+        }
+
+    }
+
+    let fireBaseData = new GetDataFromFireBase
 
     useEffect(() => {
-        if (querySnapshot.docs[0].data()) {
-            const {boards} = querySnapshot.docs[0].data()
-            if (boards && boards.filter(b => b.url === link.url).length) {
-                setCurrentBoard(boards.filter(b => b.url === link.url)[0])
-                setBoardSectionStyles({
-                    ...boardSectionStyles,
-                    background: boards.filter(b => b.url === link.url)[0].background,
-                    color: boards.filter(b => b.url === link.url)[0].textColor
-                })
-            }
-        }
-        if (querySnapshot.docs[1].data()) {
-            const {taskLists} = querySnapshot.docs[1].data();
-            if (taskLists && taskLists.length && taskLists.filter(tl => tl.boardUrl === link.url).length) {
-                setBoardTaskLists(taskLists.filter(tl => tl.boardUrl === link.url))
-            }
-        }
-        if (querySnapshot.docs[2].data()) {
-            const {tasks} = querySnapshot.docs[2].data()
-            if (tasks && tasks.filter(t => t.boardUrl === link.url).length) {
-                setTasks(tasks.filter(t => t.boardUrl === link.url))
-            }
-        }
-
+        fireBaseData.getBoards(link.url);
+        fireBaseData.getTaskLists(link.url);
+        fireBaseData.getTasks(link.url)
     }, [link.url])
 
     function closeTaskListForm() {
@@ -68,7 +83,7 @@ const Board = () => {
                 currentBoard.url,
                 taskListName
             ))
-        ).then(res => console.log(res))
+        ).then(res => res)
         setBoardTaskLists([...boardTaskLists, fireBaseConverter(new TaskListDoc(
             'taskList' + Date.parse(nowDate),
             currentBoard.url,
@@ -97,6 +112,7 @@ const Board = () => {
     }
 
     function deleteTaskList(obj) {
+        tasks.filter(task=>task.taskListId === obj.taskListId).forEach(task=>deleteTask(obj.taskListId, task))
         deleteItem(db, 'trello', 'TaskList', 'taskLists', obj).then(res => console.log(res))
         setBoardTaskLists(boardTaskLists.filter(tl => tl.taskListId !== obj.taskListId))
     }
@@ -109,22 +125,16 @@ const Board = () => {
         }
     }
 
-    function openTaskForm() {
-        setTaskFormClasses({
-            ...taskFormClasses,
-            taskForm: [boardStyles.task__form].join(' '),
-            addButton: [boardStyles.taskList__button, commonStyle.blockIHidden].join(' '),
-            settings: [boardStyles.taskList__settings, commonStyle.blockIHidden].join(' '),
-        })
+    function openTaskForm(e) {
+        e.currentTarget.nextSibling.className = [boardStyles.taskList__settings, commonStyle.blockIHidden].join(' ')
+        e.currentTarget.previousSibling.className = [boardStyles.task__form].join(' ')
+        e.currentTarget.className = [boardStyles.taskList__button, commonStyle.blockIHidden].join(' ')
     }
 
-    function closeTaskForm() {
-        setTaskFormClasses({
-            ...taskFormClasses,
-            taskForm: [boardStyles.task__form, commonStyle.blockIHidden].join(' '),
-            addButton: [boardStyles.taskList__button].join(' '),
-            settings: [boardStyles.taskList__settings].join(' '),
-        })
+    function closeTaskForm(e) {
+        e.currentTarget.parentNode.parentNode.className = [boardStyles.task__form, commonStyle.blockIHidden].join(' ')
+        e.currentTarget.parentNode.parentNode.nextSibling.className = [boardStyles.taskList__button].join(' ')
+        e.currentTarget.parentNode.parentNode.nextSibling.nextSibling.className = [boardStyles.taskList__settings].join(' ')
     }
 
     const onSubmitTaskForm = e => {
@@ -159,19 +169,21 @@ const Board = () => {
                     e.currentTarget.dataset.list,
                     currentBoard.url,
                     taskName,
-                    e.currentTarget.parentNode.previousSibling.childNodes.length+1
+                    e.currentTarget.parentNode.previousSibling.childNodes.length + 1
                 ))
-            ).then(res => console.log(res))
+            ).then(res => res)
             setTasks([...tasks, fireBaseConverter(new TaskDoc(
                 'taskId' + Date.parse(nowDate),
                 e.currentTarget.dataset.list,
                 currentBoard.url,
                 taskName,
-                e.currentTarget.parentNode.previousSibling.childNodes.length+1
+                e.currentTarget.parentNode.previousSibling.childNodes.length + 1
             ))])
         }
-        closeTaskForm()
         setTaskName('')
+        e.currentTarget.className = [boardStyles.task__form, commonStyle.blockIHidden].join(' ')
+        e.currentTarget.nextSibling.className = [boardStyles.taskList__button].join(' ')
+        e.currentTarget.nextSibling.nextSibling.className = [boardStyles.taskList__settings].join(' ')
     }
 
     function copyTask(e, obj) {
@@ -197,17 +209,73 @@ const Board = () => {
         ))])
     }
 
-    function updateTasks(taskListId) {
+    function copyTasks(listId, tasksArray) {
+        return [...tasksArray.filter(t => t.taskListId === listId)]
+    }
 
+    function copyTasksForDelete(listId, tasksArray, deletedObj) {
+        return [...tasksArray.filter(t => t.taskListId === listId && t.taskId !== deletedObj.taskId)]
+    }
+
+    function reIndexTasks(listId, tasksArray, savedTasksArray) {
+        tasksArray.filter(task => task.taskListId === listId).forEach(task => deleteItem(db, 'trello', 'Tasks', 'tasks', task))
+        savedTasksArray = savedTasksArray.sort(sortTasks).map((task, i) => {
+            task.order = i + 1;
+            return task
+        })
+        savedTasksArray.forEach(task => addItem(db, 'trello', 'Tasks', 'tasks', task))
+        fireBaseData.getTasks(link.url)
+        return tasks
     }
 
     function deleteTask(taskListId, obj) {
         deleteItem(db, 'trello', 'Tasks', 'tasks', obj).then(r => r)
         setTasks(tasks.filter(t => t.taskId !== obj.taskId))
-        let savedTasks = [...tasks.filter(t => t.taskListId === taskListId && t.taskId !== obj.taskId)]
-        tasks.filter(task => task.taskListId === taskListId).forEach(task => deleteItem(db, 'trello', 'Tasks', 'tasks', task))
-        savedTasks = savedTasks.sort(sortTasks).map((task, i) => {task.order = i + 1;return task})
-        savedTasks.forEach(task => addItem(db, 'trello', 'Tasks', 'tasks', task))
+        reIndexTasks(taskListId, tasks, copyTasksForDelete(taskListId, tasks, obj))
+    }
+
+    function dragOverHandler(e) {
+        e.preventDefault()
+        if (e.target.hasAttribute('data-order')) {
+            e.target.style.boxShadow = '0 2px 5px 0 #454545'
+        }
+    }
+
+    function dragStartHandler(e, list, task) {
+        setCurrentTaskList(list)
+        setCurrentTask(task)
+    }
+
+    function dragLeaveHandler(e) {
+        e.target.style.boxShadow = '0 0 10px 0 rgba(69, 69, 69, 0.25)'
+    }
+
+    function dragEndHandler(e) {
+        e.target.style.boxShadow = '0 0 10px 0 rgba(69, 69, 69, 0.25)'
+    }
+
+    function dropHandler(e, list, task) {
+        e.preventDefault()
+        let targetIndex = Array.prototype.indexOf.call(e.target.parentNode.children, e.target)
+        let draggableTask = Object.assign(currentTask, {})
+        deleteTask(currentTaskList.taskListId, currentTask)
+        setCurrentTask(null)
+        draggableTask.taskListId = list.taskListId
+        draggableTask.order = targetIndex
+        addItem(db, 'trello', 'Tasks', 'tasks', draggableTask).then(res => res)
+        setTasks(reIndexTasks(list.taskListId, tasks, copyTasks(list.taskListId, tasks)))
+    }
+
+    function listDropHandler(e, taskList) {
+        e.preventDefault()
+        if (!tasks.filter(t => t.taskListId === taskList.taskListId).length) {
+            let draggableTask = Object.assign(currentTask, {})
+            deleteTask(currentTaskList.taskListId, currentTask)
+            setCurrentTask(null)
+            draggableTask.taskListId = taskList.taskListId
+            addItem(db, 'trello', 'Tasks', 'tasks', draggableTask).then(res => res)
+            setTasks(reIndexTasks(taskList.taskListId, tasks, copyTasks(taskList.taskListId, tasks)))
+        }
     }
 
 
@@ -216,12 +284,23 @@ const Board = () => {
             <div className={boardStyles.taskList__items}>
                 {boardTaskLists.length
                     ? boardTaskLists.map(btl => (
-                        <TaskList btl={btl} tasks={tasks} sortTasks={sortTasks} copyTask={copyTask}
-                                  onSubmitTaskForm={onSubmitTaskForm} taskName={taskName} deleteTask={deleteTask}
-                                  setTaskName={setTaskName} taskFormClasses={taskFormClasses}
-                                  closeTaskForm={closeTaskForm} openTaskForm={openTaskForm}
-                                  boardSectionStyles={boardSectionStyles} key={btl.taskListId}
-                                  copyTaskList={copyTaskList} deleteTaskList={deleteTaskList}/>
+                        <TaskList btl={btl} tasks={tasks} sortTasks={sortTasks}
+                                  copyTask={copyTask} taskName={taskName}
+                                  onSubmitTaskForm={onSubmitTaskForm}
+                                  deleteTask={deleteTask} key={btl.taskListId}
+                                  setTaskName={setTaskName}
+                                  closeTaskForm={closeTaskForm}
+                                  openTaskForm={openTaskForm}
+                                  dropHandler={dropHandler}
+                                  boardSectionStyles={boardSectionStyles}
+                                  deleteTaskList={deleteTaskList}
+                                  copyTaskList={copyTaskList}
+                                  dragOverHandler={dragOverHandler}
+                                  dragStartHandler={dragStartHandler}
+                                  dragLeaveHandler={dragLeaveHandler}
+                                  dragEndHandler={dragEndHandler}
+                                  listDropHandler={listDropHandler}
+                        />
                     ))
                     : ''
                 }
