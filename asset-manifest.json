@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/simpleTrello/static/css/main.86d693cd.css",
+    "main.js": "/simpleTrello/static/js/main.2e44b842.js",
+    "static/media/simpleTrelloLogo.svg": "/simpleTrello/static/media/simpleTrelloLogo.5294d11a17c5a7b4ae31729812f5fd8f.svg",
+    "static/media/eyeClosed.svg": "/simpleTrello/static/media/eyeClosed.e35d7394137adff23ff2f49215306ac3.svg",
+    "static/media/eyeOpened.svg": "/simpleTrello/static/media/eyeOpened.bd92fd68470ffd94cad4c97bfa6b251f.svg",
+    "index.html": "/simpleTrello/index.html",
+    "main.86d693cd.css.map": "/simpleTrello/static/css/main.86d693cd.css.map",
+    "main.2e44b842.js.map": "/simpleTrello/static/js/main.2e44b842.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.86d693cd.css",
+    "static/js/main.2e44b842.js"
+  ]
+}
