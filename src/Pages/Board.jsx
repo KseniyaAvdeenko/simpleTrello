@@ -247,11 +247,11 @@ const Board = () => {
     }
 
     function dragLeaveHandler(e) {
-        e.target.style.boxShadow = '0 0 10px 0 rgba(69, 69, 69, 0.25)'
+        e.target.parentNode.childNodes.forEach(task=> task.style.boxShadow = '0 0 10px 0 rgba(69, 69, 69, 0.25)')
     }
 
     function dragEndHandler(e) {
-        e.target.style.boxShadow = '0 0 10px 0 rgba(69, 69, 69, 0.25)'
+        e.target.parentNode.childNodes.forEach(task=> task.style.boxShadow = '0 0 10px 0 rgba(69, 69, 69, 0.25)')
     }
 
     function dropHandler(e, list, task) {
