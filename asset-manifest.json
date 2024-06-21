@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/simpleTrello/static/css/main.329c60e9.css",
-    "main.js": "/simpleTrello/static/js/main.c3b1b444.js",
+    "main.css": "/simpleTrello/static/css/main.2269fbe0.css",
+    "main.js": "/simpleTrello/static/js/main.1782015e.js",
     "static/media/mainImg.png": "/simpleTrello/static/media/mainImg.5c99c0def3eeac0443b8.png",
     "static/media/simpleTrelloLogo.svg": "/simpleTrello/static/media/simpleTrelloLogo.5294d11a17c5a7b4ae31729812f5fd8f.svg",
     "static/media/eyeClosed.svg": "/simpleTrello/static/media/eyeClosed.e35d7394137adff23ff2f49215306ac3.svg",
     "static/media/eyeOpened.svg": "/simpleTrello/static/media/eyeOpened.bd92fd68470ffd94cad4c97bfa6b251f.svg",
     "index.html": "/simpleTrello/index.html",
-    "main.329c60e9.css.map": "/simpleTrello/static/css/main.329c60e9.css.map",
-    "main.c3b1b444.js.map": "/simpleTrello/static/js/main.c3b1b444.js.map"
+    "main.2269fbe0.css.map": "/simpleTrello/static/css/main.2269fbe0.css.map",
+    "main.1782015e.js.map": "/simpleTrello/static/js/main.1782015e.js.map"
   },
   "entrypoints": [
-    "static/css/main.329c60e9.css",
-    "static/js/main.c3b1b444.js"
+    "static/css/main.2269fbe0.css",
+    "static/js/main.1782015e.js"
   ]
 }
