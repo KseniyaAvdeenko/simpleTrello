@@ -16,7 +16,6 @@ const Profile = () => {
     function getuserBoards(userId) {
         if (querySnapshot.docs[0].data()) {
             const {boards} = querySnapshot.docs[0].data()
-            console.log(boards)
             boards
                 ? setUserBoards(boards.filter(b => b.userId === userId))
                 : setUserBoards([])
